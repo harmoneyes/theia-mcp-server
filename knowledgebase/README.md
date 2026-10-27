@@ -1,6 +1,6 @@
 # Knowledgebase bundles
 
-> **First draft.** No bundles are published here yet. This page sets out the bundle format and how releases will be laid out.
+> **First draft.** No separate bundles are published here yet; the server wheel ships `theia_knowledgebase_0.1.0.zip` inside it. This page sets out the bundle format and how releases will be laid out.
 
 The knowledgebase is the Theia product and SDK information an agent reads through `get_knowledgebase_index` and `read_knowledgebase`. It is orientation for the agent. The authoritative description of any method or event is the endpoint's own discovery document (`rpc.discover`), which `describe_method` returns.
 
