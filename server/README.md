@@ -37,6 +37,22 @@ Or run it without an environment of your own, with [uv](https://docs.astral.sh/u
 uvx --from theia_native_mcp-0.1.0-py3-none-any.whl theia-native-mcp
 ```
 
+## Releasing
+
+GitHub Pages serves a package index for this repository at `https://harmoneyes.github.io/theia-mcp-server/simple/`, built from the wheels in this folder. Installs that go through it name no version:
+
+```bash
+uvx --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
+```
+
+So a release changes nothing for anyone who has that command, including the HarmonEyes dashboard's copy. To release:
+
+1. Put the new wheel in this folder. Keep the older ones: the index lists every wheel here, so a pinned install still resolves.
+2. From the repository root, run `python3 tools/build_simple_index.py`. It rewrites `simple/` with each wheel's sha256, which uv checks on download.
+3. Commit the wheel and `simple/` together.
+
+A machine that already ran the server can keep using its cached copy until uv refreshes it: add `--refresh` to the command once, or run `uv cache clean theia-native-mcp`.
+
 ## Run
 
 | Mode | Command | Notes |

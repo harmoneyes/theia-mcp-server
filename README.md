@@ -36,7 +36,7 @@ The server knows nothing about individual SDK methods. Everything it shows the a
 
 ## Give this to your AI agent
 
-Paste this into a coding agent that can run commands on your machine, such as Claude Code, Cursor or Codex. A chat-only client (Claude Desktop, for one) cannot follow it: register the server by hand instead, as in [Quick start](#quick-start). The wheel link works once this repository is public with GitHub Pages serving its `main` branch.
+Paste this into a coding agent that can run commands on your machine, such as Claude Code, Cursor or Codex. A chat-only client (Claude Desktop, for one) cannot follow it: register the server by hand instead, as in [Quick start](#quick-start). The install link works once this repository is public with GitHub Pages serving its `main` branch, which serves the package index in [`simple/`](simple/). It names no version: a release changes nothing here.
 
 ```text
 Install the Theia MCP server and register it with this agent's MCP client.
@@ -50,9 +50,9 @@ The Theia MCP server connects you to a running Theia SDK through the SDK's built
 
 2. Register a stdio MCP server named theia, at user scope where supported:
      command: uvx
-     args: --from https://harmoneyes.github.io/theia-mcp-server/server/theia_native_mcp-0.1.0-py3-none-any.whl theia-native-mcp
+     args: --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
    In Claude Code, that is:
-     claude mcp add --scope user theia -- uvx --from https://harmoneyes.github.io/theia-mcp-server/server/theia_native_mcp-0.1.0-py3-none-any.whl theia-native-mcp
+     claude mcp add --scope user theia -- uvx --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
    If uvx is not on your PATH, use its full path.
 
 3. Reload or restart so the server loads, then confirm its tools are listed.
