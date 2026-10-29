@@ -49,9 +49,17 @@ So a release changes nothing for anyone who has that command, including the Harm
 
 1. Put the new wheel in this folder. Keep the older ones: the index lists every wheel here, so a pinned install still resolves.
 2. From the repository root, run `python3 tools/build_simple_index.py`. It rewrites `simple/` with each wheel's sha256, which uv checks on download.
-3. Commit the wheel and `simple/` together.
+3. Commit the wheel and `simple/` together. CI fails a pull request whose `simple/` doesn't match the wheels here.
 
 A machine that already ran the server can keep using its cached copy until uv refreshes it: add `--refresh` to the command once, or run `uv cache clean theia-native-mcp`.
+
+### Keeping installs on this index
+
+Naming the index keeps uv from taking `theia-native-mcp` from PyPI only while the index answers. If it answers 404 (this repository made private, Pages turned off, or the repository renamed), uv looks for the package on PyPI next and installs whatever is published there under that name, with no warning. Everyone holding the command would then run it, and the setup prompt has an AI agent do that unattended. So:
+
+- **Register `theia-native-mcp` on PyPI to HarmonEyes before anyone is given the command,** and keep it registered. An empty 0.0.0 release with no `theia-native-mcp` command is enough: an install that falls through to it fails instead of running someone else's code.
+- **Keep `.nojekyll` at the repository root.** Pages then serves the files as they are, with no Jekyll build that could fail before the index is first published.
+- **Don't move or rename the repository or `simple/`** while the command is in use; the dashboard and every copied config hold the URL.
 
 ## Run
 
