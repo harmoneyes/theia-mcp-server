@@ -37,7 +37,7 @@ Pages are addressed by anchors:
 | Home | `index.md` |
 | About Theia | `about/index.md`, `about/harmoneyes-and-theia.md`, `about/not-measured-by-theia.md` |
 | Measured outputs | `outputs/index.md`, `outputs/cognitive-load.md`, `outputs/fatigue.md`, `outputs/attention.md`, `outputs/mental-readiness.md`, `outputs/transitions.md` |
-| Setup | `setup/index.md`, `setup/connecting-an-ai-agent.md`, `setup/session-reports.md` |
+| Setup | `setup/index.md`, `setup/installing-the-sdk.md`, `setup/activating-the-sdk.md`, `setup/first-session.md`, `setup/connecting-an-ai-agent.md`, `setup/session-reports.md`, `setup/sdk-alerts.md` |
 | Advanced integration | `advanced-integration/index.md`, `advanced-integration/use-cases.md`, `advanced-integration/features.md`, `advanced-integration/integration-example.md` |
 
 `setup/connecting-an-ai-agent.md` must stay at that path: the server's instructions and its 401 guidance name it.
