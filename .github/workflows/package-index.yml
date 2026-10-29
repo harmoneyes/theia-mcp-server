@@ -1,0 +1,28 @@
+# simple/ is generated from server/*.whl by tools/build_simple_index.py. A
+# wheel committed without rebuilding it would be missing from the index, so
+# installs would keep getting the old release; fail instead.
+name: Package index
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  up-to-date:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild simple/ from the wheels
+        run: python3 tools/build_simple_index.py
+      - name: Check simple/ matches what is committed
+        run: |
+          if [ -n "$(git status --porcelain -- simple)" ]; then
+            git status --short -- simple
+            git diff -- simple
+            echo "::error::simple/ is out of date. Run python3 tools/build_simple_index.py and commit the result."
+            exit 1
+          fi
