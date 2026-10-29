@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Wheel | [`theia_native_mcp-0.1.0-py3-none-any.whl`](theia_native_mcp-0.1.0-py3-none-any.whl) (pure Python, any platform) |
+| Wheel | [`theia_native_mcp-0.1.1-py3-none-any.whl`](theia_native_mcp-0.1.1-py3-none-any.whl) (pure Python, any platform) |
 | Package | `theia_native_mcp` |
 | Command | `theia-native-mcp` (also `python -m theia_native_mcp`) |
 | Python | 3.10 or later |
@@ -21,20 +21,20 @@ From this folder, Linux and macOS:
 
 ```bash
 python3 -m venv ~/.venvs/theia_native_mcp
-~/.venvs/theia_native_mcp/bin/pip install theia_native_mcp-0.1.0-py3-none-any.whl
+~/.venvs/theia_native_mcp/bin/pip install theia_native_mcp-0.1.1-py3-none-any.whl
 ```
 
 Windows:
 
 ```powershell
 py -m venv $env:USERPROFILE\.venvs\theia_native_mcp
-& $env:USERPROFILE\.venvs\theia_native_mcp\Scripts\pip.exe install theia_native_mcp-0.1.0-py3-none-any.whl
+& $env:USERPROFILE\.venvs\theia_native_mcp\Scripts\pip.exe install theia_native_mcp-0.1.1-py3-none-any.whl
 ```
 
 Or run it without an environment of your own, with [uv](https://docs.astral.sh/uv/)'s `uvx`:
 
 ```bash
-uvx --from theia_native_mcp-0.1.0-py3-none-any.whl theia-native-mcp
+uvx --from theia_native_mcp-0.1.1-py3-none-any.whl theia-native-mcp
 ```
 
 ## Releasing

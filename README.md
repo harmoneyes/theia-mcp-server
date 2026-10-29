@@ -68,7 +68,7 @@ The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer
 2. **Install** the server into its own virtual environment, from the wheel in [`server/`](server/):
    ```bash
    python3 -m venv ~/.venvs/theia_native_mcp
-   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.0-py3-none-any.whl
+   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.1-py3-none-any.whl
    ```
    This is a regular install: re-run it to pick up a new version. Or skip the environment and run it with `uvx`, as in [Give this to your AI agent](#give-this-to-your-ai-agent).
 3. **Register** it with your MCP client. For Claude Code:
@@ -111,3 +111,7 @@ How each works: [docs/how-the-mcp-server-works.md](docs/how-the-mcp-server-works
 - [The SDK RPC protocol](docs/sdk-rpc-protocol.md)
 - [Extending the SDK's RPC](docs/extending-the-sdk-rpc.md)
 - [Knowledgebase bundles](knowledgebase/README.md)
+
+## License
+
+Proprietary: © 2026 HarmonEyes, all rights reserved. Install and run it only to use the Theia SDK under a license agreement with HarmonEyes. See [LICENSE](LICENSE).

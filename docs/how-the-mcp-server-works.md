@@ -12,7 +12,7 @@ The server sits between an AI agent and one or more Theia SDK RPC endpoints. It 
    - A name or URL from the settings' `endpoints`, or any `https://` URL, is used as given.
    - With no endpoint, it tries the local SDK: `https://127.0.0.1:<port>/v1` for ports 17420, 19420, 21420, 23420 and 25420 (`port`, then `port + port_step`, up to `port_attempts` candidates). Each candidate must first answer `GET /health` with `{"status":"pass"}` within 3 s, or it is skipped and no token is sent to it.
    - Only `https://` is accepted.
-2. **Verifies the server.** TLS is checked against the one certificate the server trusts, the SDK's compiled-in certificate. The host name is not checked, so the certificate identifies an SDK wherever it runs.
+2. **Verifies the server.** TLS is checked against the one certificate the server trusts, the SDK's compiled-in certificate. The host name is not checked, so an SDK passes wherever it runs. Every SDK has the same certificate, so this shows that a Theia SDK answered, not which one (see [Access and security](../README.md#access-and-security)).
 3. **Picks the token:** `connect`'s `token`, else the environment variable the endpoint's `token_env` names (`THEIA_RPC_TOKEN` for the local SDK), else `default_token`. It is sent as `Authorization: Bearer <token>`.
 4. **Opens an RPC session** with `open_rpc_session`. The reply's `Theia-Rpc-Session-Id` header is sent on every later request.
 5. **Reads the surface** with `rpc.discover`, and assigns the connection an id (`conn-1`, `conn-2`, ...).
