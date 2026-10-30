@@ -11,7 +11,7 @@
 | Command | `theia-native-mcp` (also `python -m theia_native_mcp`) |
 | Python | 3.10 or later |
 | Main dependencies | the MCP Python SDK (`mcp>=2.2.0,<3`), `httpx2`, `PyYAML` |
-| Ships with it | the knowledgebase bundles, the agent-facing text (server instructions, tool descriptions), and the SDK RPC certificate it trusts |
+| Ships with it | the knowledgebase bundles and the agent-facing text (server instructions, tool descriptions). No certificate: it reads each SDK's from that SDK's folder or settings ([configuration](../docs/configuration.md#certificate-order)) |
 
 ## Install
 
