@@ -103,7 +103,7 @@ How each works: [docs/how-the-mcp-server-works.md](docs/how-the-mcp-server-works
 
 - **What a token reaches is set by the SDK host.** By default a token reaches only the connection and status methods. User state (outputs, transitions, the methods that return them) and session reports must be granted per token in the SDK's RPC config, because they describe a person's eye movement and physiological state.
 - **The default token `theia_mcp_default_token` is public.** Any local process that knows it can control an SDK that accepts it. Use it for development only.
-- **The SDK's RPC certificate is for development and testing.** The server trusts only the certificate compiled into the SDK. Its private key ships in every SDK build, so anyone who extracts it can impersonate an SDK's RPC server.
+- **Each SDK has its own RPC certificate.** On its first start the SDK generates a certificate and private key for its OS user in `~/.theia/rpc_tls` (`$THEIA_RPC_TLS_DIR` if set); no build carries a private key. The server reads the certificate from that folder, or from the path configured for the endpoint, and connects only to a server that proves it holds the matching private key, so a token is never sent to another program on the port.
 - **HTTP mode requires a secret.** `--http` serves the MCP at `/mcp` and needs `THEIA_MCP_HTTP_SECRET`; clients send it as a bearer token.
 
 ## Documentation
