@@ -127,13 +127,13 @@ on request from client:
 
 ## Pointing the MCP server at the app
 
-- Pass the app endpoint's URL to `connect`, or add it to the settings' `endpoints` with a name and `token_env`.
+- Pass the app endpoint's URL to `connect`, or add it to the settings' `endpoints` with a name, `token_env` and `certificate`.
 - A configured endpoint or URL is used as given, with no health check and no `/v1` added.
 - `connect` with no endpoint searches only the SDK's default local ports, and needs `GET /health` to answer `{"status":"pass"}`.
 
-## Current limitation: the certificate
+## The certificate
 
-The MCP server verifies every endpoint against one certificate, the SDK's compiled-in RPC certificate, and has no setting for another. So an app's endpoint must currently serve that same certificate and its private key. Both ship with the SDK and are for development and testing only.
+The app's endpoint serves HTTPS with a certificate and private key of its own. The MCP server verifies it against the certificate it is given for that endpoint: the endpoint's `certificate` setting, or `connect`'s `certificate` argument ([Certificate order](configuration.md#certificate-order)). So give the MCP server a copy of the endpoint's certificate. The private key stays with the app.
 
 ## Checklist
 
@@ -146,4 +146,4 @@ The MCP server verifies every endpoint against one certificate, the SDK's compil
 - [ ] SDK calls forwarded with results, errors, streams and files passed through unchanged
 - [ ] App event streams in the SDK's message format, with `resume_subscription` and keep-alives
 - [ ] `GET /health` if the endpoint should be found by the local port search
-- [ ] Serves the certificate the MCP server trusts
+- [ ] Serves HTTPS with its own certificate, and a copy of that certificate is given to the MCP server
