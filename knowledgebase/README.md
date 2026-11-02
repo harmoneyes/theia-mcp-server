@@ -39,6 +39,7 @@ Pages are addressed by anchors:
 | Measured outputs | `outputs/index.md`, `outputs/cognitive-load.md`, `outputs/fatigue.md`, `outputs/attention.md`, `outputs/mental-readiness.md`, `outputs/transitions.md` |
 | Setup | `setup/index.md`, `setup/installing-the-sdk.md`, `setup/activating-the-sdk.md`, `setup/first-session.md`, `setup/connecting-an-ai-agent.md`, `setup/session-reports.md`, `setup/sdk-alerts.md` |
 | Advanced integration | `advanced-integration/index.md`, `advanced-integration/use-cases.md`, `advanced-integration/features.md`, `advanced-integration/integration-example.md` |
+| API reference | `api-reference/index.md`, one page per group of public RPC methods (session lifecycle, data input, prediction results, ...), `api-reference/events.md`, `api-reference/types.md`, `api-reference/rpc-differences.md` |
 
 `setup/connecting-an-ai-agent.md` must stay at that path: the server's instructions and its 401 guidance name it.
 

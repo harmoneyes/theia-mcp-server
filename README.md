@@ -16,7 +16,7 @@ The server knows nothing about individual SDK methods. Everything it shows the a
 
 | Folder | Contents |
 |---|---|
-| [`server/`](server/) | The MCP server package: install, run, configure |
+| [`server/`](server/) | The MCP server wheels, served through the package index in [`simple/`](simple/) |
 | [`knowledgebase/`](knowledgebase/) | Knowledgebase bundles, one per Theia SDK version, and how they are released |
 | [`docs/`](docs/) | Developer documentation: how the server works, the RPC protocol, extending the SDK's RPC |
 
@@ -38,39 +38,17 @@ The server knows nothing about individual SDK methods. Everything it shows the a
 
 Paste this into a coding agent that can run commands on your machine, such as Claude Code, Cursor or Codex. A chat-only client (Claude Desktop, for one) cannot follow it: register the server by hand instead, as in [Quick start](#quick-start). The install link works once this repository is public with GitHub Pages serving its `main` branch, which serves the package index in [`simple/`](simple/). It names no version: a release changes nothing here.
 
-```text
-Install the Theia MCP server and register it with this agent's MCP client.
-
-The Theia MCP server connects you to a running Theia SDK through the SDK's built-in RPC server. That RPC server is enabled in the SDK's configuration and runs only while an app has a live SDK instance, so it may not be reachable yet; setup does not need it. To get the Theia SDK, contact HarmonEyes (https://www.harmoneyes.com) for a license. The Theia MCP server itself needs no key: never ask for one.
-
-1. Check that uv is installed (it provides uvx) by running: uvx --version
-   If it is missing, install it (https://docs.astral.sh/uv/getting-started/installation/):
-     Linux / macOS: curl -LsSf https://astral.sh/uv/install.sh | sh
-     Windows (PowerShell): powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-2. Register a stdio MCP server named theia, at user scope where supported:
-     command: uvx
-     args: --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
-   In Claude Code, that is:
-     claude mcp add --scope user theia -- uvx --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
-   If uvx is not on your PATH, use its full path.
-
-3. Reload or restart so the server loads, then confirm its tools are listed.
-
-4. Only if the user asked to set up the Theia SDK too: read the knowledgebase page setup/installing-the-sdk.md with the Theia MCP server's knowledgebase tools, and follow the setup pages in order.
-
-5. Only if the user asked to connect to an SDK: check whether one is reachable with the health check of the SDK's RPC server, then follow the Theia MCP server's setup guidance (its instructions and the knowledgebase page setup/connecting-an-ai-agent.md).
-```
+The prompt is the `prompt` field of [`agent-prompt.json`](agent-prompt.json), served at https://harmoneyes.github.io/theia-mcp-server/agent-prompt.json.
 
 The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer access, with that one license sentence pointing at the reader's API keys instead. Keep the two in step.
 
 ## Quick start
 
 1. **Requirements:** Python 3.10 or later, and a running app with the Theia SDK's RPC server enabled.
-2. **Install** the server into its own virtual environment, from the wheel in [`server/`](server/):
+2. **Install** the latest version of the server into its own virtual environment, with [uv](https://docs.astral.sh/uv/):
    ```bash
    python3 -m venv ~/.venvs/theia_native_mcp
-   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.2-py3-none-any.whl
+   uv pip install --python ~/.venvs/theia_native_mcp/bin/python --upgrade --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
    ```
    This is a regular install: re-run it to pick up a new version. Or skip the environment and run it with `uvx`, as in [Give this to your AI agent](#give-this-to-your-ai-agent).
 3. **Register** it with your MCP client. For Claude Code:
@@ -80,7 +58,7 @@ The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer
    Add `-e THEIA_RPC_TOKEN=<token>` or `-e THEIA_MCP_SETTINGS=<path>` before `--` to pass a token or a settings file.
 4. **Connect:** ask the agent to connect. With no endpoint given, the server looks for an SDK on this machine on ports 17420, 19420, 21420, 23420 and 25420.
 
-Details: [server/README.md](server/README.md) and [docs/configuration.md](docs/configuration.md).
+Details: [docs/configuration.md](docs/configuration.md).
 
 ## The tools
 
@@ -103,7 +81,7 @@ How each works: [docs/how-the-mcp-server-works.md](docs/how-the-mcp-server-works
 
 - **What a token reaches is set by the SDK host.** By default a token reaches only the connection and status methods. User state (outputs, transitions, the methods that return them) and session reports must be granted per token in the SDK's RPC config, because they describe a person's eye movement and physiological state.
 - **The default token `theia_mcp_default_token` is public.** Any local process that knows it can control an SDK that accepts it. Use it for development only.
-- **The SDK's RPC certificate is for development and testing.** The server trusts only the certificate compiled into the SDK. Its private key ships in every SDK build, so anyone who extracts it can impersonate an SDK's RPC server.
+- **Each SDK has its own RPC certificate.** On its first start the SDK generates a certificate and private key for its OS user in `~/.theia/rpc_tls` (`$THEIA_RPC_TLS_DIR` if set); no build carries a private key. The server reads the certificate from that folder, or from the path configured for the endpoint, and connects only to a server that proves it holds the matching private key, so a token is never sent to another program on the port.
 - **HTTP mode requires a secret.** `--http` serves the MCP at `/mcp` and needs `THEIA_MCP_HTTP_SECRET`; clients send it as a bearer token.
 
 ## Documentation
