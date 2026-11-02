@@ -16,7 +16,7 @@ The server knows nothing about individual SDK methods. Everything it shows the a
 
 | Folder | Contents |
 |---|---|
-| [`server/`](server/) | The MCP server package: install, run, configure |
+| [`server/`](server/) | The MCP server wheels, served through the package index in [`simple/`](simple/) |
 | [`knowledgebase/`](knowledgebase/) | Knowledgebase bundles, one per Theia SDK version, and how they are released |
 | [`docs/`](docs/) | Developer documentation: how the server works, the RPC protocol, extending the SDK's RPC |
 
@@ -38,37 +38,17 @@ The server knows nothing about individual SDK methods. Everything it shows the a
 
 Paste this into a coding agent that can run commands on your machine, such as Claude Code, Cursor or Codex. A chat-only client (Claude Desktop, for one) cannot follow it: register the server by hand instead, as in [Quick start](#quick-start). The install link works once this repository is public with GitHub Pages serving its `main` branch, which serves the package index in [`simple/`](simple/). It names no version: a release changes nothing here.
 
-```text
-Install the Theia MCP server and register it with this agent's MCP client.
-
-The Theia MCP server connects you to a running Theia SDK through the SDK's built-in RPC server. That RPC server is enabled in the SDK's configuration and runs only while an app has a live SDK instance, so it may not be reachable yet; setup does not need it. To get the Theia SDK, contact HarmonEyes (https://www.harmoneyes.com) for a license. The Theia MCP server itself needs no key: never ask for one.
-
-1. Check that uv is installed (it provides uvx) by running: uvx --version
-   If it is missing, install it (https://docs.astral.sh/uv/getting-started/installation/):
-     Linux / macOS: curl -LsSf https://astral.sh/uv/install.sh | sh
-     Windows (PowerShell): powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-2. Register a stdio MCP server named theia, at user scope where supported:
-     command: uvx
-     args: --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
-   In Claude Code, that is:
-     claude mcp add --scope user theia -- uvx --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
-   If uvx is not on your PATH, use its full path.
-
-3. Reload or restart so the server loads, then confirm its tools are listed.
-
-4. Only if the user asked to connect to an SDK: check whether one is reachable with the health check of the SDK's RPC server, then follow the Theia MCP server's setup guidance (its instructions and the knowledgebase page setup/connecting-an-ai-agent.md).
-```
+The prompt is the `prompt` field of [`agent-prompt.json`](agent-prompt.json), served at https://harmoneyes.github.io/theia-mcp-server/agent-prompt.json.
 
 The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer access, with that one license sentence pointing at the reader's API keys instead. Keep the two in step.
 
 ## Quick start
 
 1. **Requirements:** Python 3.10 or later, and a running app with the Theia SDK's RPC server enabled.
-2. **Install** the server into its own virtual environment, from the wheel in [`server/`](server/):
+2. **Install** the latest version of the server into its own virtual environment, with [uv](https://docs.astral.sh/uv/):
    ```bash
    python3 -m venv ~/.venvs/theia_native_mcp
-   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.1-py3-none-any.whl
+   uv pip install --python ~/.venvs/theia_native_mcp/bin/python --upgrade --index https://harmoneyes.github.io/theia-mcp-server/simple/ theia-native-mcp
    ```
    This is a regular install: re-run it to pick up a new version. Or skip the environment and run it with `uvx`, as in [Give this to your AI agent](#give-this-to-your-ai-agent).
 3. **Register** it with your MCP client. For Claude Code:
@@ -78,7 +58,7 @@ The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer
    Add `-e THEIA_RPC_TOKEN=<token>` or `-e THEIA_MCP_SETTINGS=<path>` before `--` to pass a token or a settings file.
 4. **Connect:** ask the agent to connect. With no endpoint given, the server looks for an SDK on this machine on ports 17420, 19420, 21420, 23420 and 25420.
 
-Details: [server/README.md](server/README.md) and [docs/configuration.md](docs/configuration.md).
+Details: [docs/configuration.md](docs/configuration.md).
 
 ## The tools
 
