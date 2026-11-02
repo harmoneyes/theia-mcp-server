@@ -57,7 +57,9 @@ The Theia MCP server connects you to a running Theia SDK through the SDK's built
 
 3. Reload or restart so the server loads, then confirm its tools are listed.
 
-4. Only if the user asked to connect to an SDK: check whether one is reachable with the health check of the SDK's RPC server, then follow the Theia MCP server's setup guidance (its instructions and the knowledgebase page setup/connecting-an-ai-agent.md).
+4. Only if the user asked to set up the Theia SDK too: read the knowledgebase page setup/installing-the-sdk.md with the Theia MCP server's knowledgebase tools, and follow the setup pages in order.
+
+5. Only if the user asked to connect to an SDK: check whether one is reachable with the health check of the SDK's RPC server, then follow the Theia MCP server's setup guidance (its instructions and the knowledgebase page setup/connecting-an-ai-agent.md).
 ```
 
 The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer access, with that one license sentence pointing at the reader's API keys instead. Keep the two in step.
@@ -68,7 +70,7 @@ The HarmonEyes dashboard offers the same prompt under Integrations ▸ Developer
 2. **Install** the server into its own virtual environment, from the wheel in [`server/`](server/):
    ```bash
    python3 -m venv ~/.venvs/theia_native_mcp
-   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.1-py3-none-any.whl
+   ~/.venvs/theia_native_mcp/bin/pip install server/theia_native_mcp-0.1.2-py3-none-any.whl
    ```
    This is a regular install: re-run it to pick up a new version. Or skip the environment and run it with `uvx`, as in [Give this to your AI agent](#give-this-to-your-ai-agent).
 3. **Register** it with your MCP client. For Claude Code:
